@@ -7,7 +7,7 @@ import {
 } from "Constants/actionTypes";
 
 const INIT_STATE = {
-  user: localStorage.getItem("user_id"),
+  // user: localStorage.getItem("user_id"),
   loading: false
 };
 
@@ -16,7 +16,7 @@ export default (state = INIT_STATE, action) => {
     case LOGIN_USER:
       return { ...state, loading: true };
     case LOGIN_USER_SUCCESS:
-      //notify.success('Login Success');
+      // notify.success('Login Success');
       return { ...state, loading: false, user: action.payload };
     case REGISTER_USER:
       return { ...state, loading: true };
