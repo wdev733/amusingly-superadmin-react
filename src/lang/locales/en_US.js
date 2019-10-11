@@ -18,6 +18,7 @@ module.exports = {
   "user.register": "Register",
   "user.forgot-password": "Forgot Password",
   "user.email": "E-mail",
+  "user.username": "Username",
   "user.password": "Password",
   "user.forgot-password-question": "Forget password?",
   "user.fullname": "Full Name",
@@ -37,6 +38,13 @@ module.exports = {
   "menu.survey": "Survey",
   "menu.todo": "Todo",
   "menu.search": "Search",
+  
+  "menu.customer": "CUSTOMERS",
+  "menu.list": "List",
+  "menu.images": "Instagram Images",
+  "menu.edit": "Edit Customer",
+  "menu.add": "Add Customer",
+  "menu.logout": "LOG OUT",
 
   /* 04.Error Page */
   "layouts.error-title": "Ooops... looks like an error occurred!",

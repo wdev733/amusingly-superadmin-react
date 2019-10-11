@@ -25,6 +25,7 @@ import notifications from "Data/topnav.notifications.json";
 
 import { menuHiddenBreakpoint,searchPath,localeOptions } from "Constants/defaultValues";
 
+import styles from './index.module.scss';
 
 class TopNav extends Component {
   constructor(props) {

@@ -1,7 +1,7 @@
 export const subHiddenBreakpoint=1440;
 export const menuHiddenBreakpoint = 768;
-export const defaultMenuType = 'menu-default'; //'menu-sub-hidden', 'menu-hidden'
-export const defaultStartPath = '/app/gogo/start'; 
+export const defaultMenuType = 'menu-sub-hidden'; //'menu-default'; // 'menu-hidden';
+export const defaultStartPath = '/customer'; 
 
 
 export const defaultLocale='en';

@@ -47,10 +47,6 @@ class App extends Component {
 		if (location.pathname === '/'  || location.pathname==='/app'|| location.pathname==='/app/') {
 			return (<Redirect to={defaultStartPath} />);
 		}
-		
-		console.log("*************************")
-		console.log(this.props);
-		console.log("*************************")
 
 		return (
 				<Fragment>
@@ -62,7 +58,7 @@ class App extends Component {
 						<Fragment>
 						<Switch>
 							<InitialPath
-								path={`${match.url}app`}
+								path={`${match.url}customer`}
 								authUser={user}
 								component={MainRoute}
 							/>

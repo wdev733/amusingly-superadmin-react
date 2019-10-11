@@ -256,64 +256,26 @@ class Sidebar extends Component {
               <Nav vertical className="list-unstyled">
                 <NavItem
                   className={classnames({
-                    active: ((this.state.selectedParentMenu == "gogo" && this.state.viewingParentMenu=="" )|| this.state.viewingParentMenu=="gogo")
+                    active: ((this.state.selectedParentMenu === "customer" && this.state.viewingParentMenu === "" )|| this.state.viewingParentMenu === "customer")
                   })}
                 >
                   <NavLink
-                    to="/app/gogo"
-                    onClick={e => this.openSubMenu(e, "gogo")}
+                    to="/customer"
                   >
                     <i className="iconsmind-Air-Balloon" />{" "}
-                    <IntlMessages id="menu.gogo" />
+                    <IntlMessages id="menu.customer" />
                   </NavLink>
                 </NavItem>
                 <NavItem
                   className={classnames({
-                    active: ((this.state.selectedParentMenu == "second-menu" && this.state.viewingParentMenu=="" )|| this.state.viewingParentMenu=="second-menu")
+                    active: ((this.state.selectedParentMenu === "second-menu" && this.state.viewingParentMenu === "" )|| this.state.viewingParentMenu === "second-menu")
                   })}
                 >
                   <NavLink
-                    to="/app/second-menu"
-                    onClick={e => this.openSubMenu(e, "second-menu")}
+                    to="/login"
                   >
                     <i className="iconsmind-Chemical-3" />{" "}
-                    <IntlMessages id="menu.second-menu" />
-                  </NavLink>
-                </NavItem>
-              </Nav>
-            </PerfectScrollbar>
-          </div>
-        </div>
-
-        <div className="sub-menu">
-          <div className="scroll">
-            <PerfectScrollbar
-              option={{ suppressScrollX: true, wheelPropagation: false }}
-            >
-              <Nav
-                className={classnames({
-                  "d-block": ((this.state.selectedParentMenu == "gogo" && this.state.viewingParentMenu=="" )|| this.state.viewingParentMenu=="gogo")
-                })}
-                data-parent="gogo"
-              >
-                <NavItem>
-                  <NavLink to="/app/gogo/start">
-                    <i className="simple-icon-paper-plane" />{" "}
-                    <IntlMessages id="menu.start" />
-                  </NavLink>
-                </NavItem>
-              </Nav>
-
-              <Nav
-                className={classnames({
-                  "d-block": ((this.state.selectedParentMenu == "second-menu" && this.state.viewingParentMenu=="" )|| this.state.viewingParentMenu=="second-menu")
-                })}
-                data-parent="second-menu"
-              >
-                <NavItem>
-                  <NavLink to="/app/second-menu/second">
-                    <i className="simple-icon-paper-plane" />{" "}
-                    <IntlMessages id="menu.second" />
+                    <IntlMessages id="menu.logout" />
                   </NavLink>
                 </NavItem>
               </Nav>
