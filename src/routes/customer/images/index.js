@@ -9,10 +9,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Link } from "react-router-dom";
 
-import styles from './index.module.scss'
+import { photoServerUrl } from "Constants/defaultValues";
+import { connect } from 'react-redux';
+import {
+  imageList
+} from "Redux/actions";
 
-export default class extends Component {
+import './index.module.scss'
+
+class InstaImages extends Component {
+
+  componentDidMount() {
+    const { customerId } = this.props.match.params
+    this.props.getInstaImageList(customerId);
+  }
+
   render() {
+
+    const { imageList } = this.props;
+    const { customerId } = this.props.match.params
+
+    console.log(imageList);
+    
     return (
       <Fragment>
         <Row>
@@ -35,42 +53,24 @@ export default class extends Component {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>
-                    <img className="img-instagram"
-                      src="https://www.amusingly.com/user/pics/89/50230781_768990676802301_8988820627105940466_n.jpg" alt="Instagram" />
-                  </td>
-                  <td></td>
-                  <td>No</td>
-                  <td>
-                    <Link to="/customer/insta-image" className="control-link">
-                      <FontAwesomeIcon icon="edit" title="Edit" size="lg" /> Edit</Link>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <img className="img-instagram"
-                      src="https://www.amusingly.com/user/pics/89/50138732_343378499602628_5034109922798297977_n.jpg" alt="Instagram" />
-                  </td>
-                  <td></td>
-                  <td>No</td>
-                  <td>
-                    <Link to="/customer/insta-image" className="control-link">
-                      <FontAwesomeIcon icon="edit" title="Edit" size="lg" /> Edit</Link>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <img className="img-instagram"
-                      src="https://www.amusingly.com/user/pics/89/51337193_399261217552069_2912088519142282911_n.jpg" alt="Instagram" />
-                  </td>
-                  <td></td>
-                  <td>No</td>
-                  <td>
-                    <Link to="/customer/insta-image" className="control-link">
-                      <FontAwesomeIcon icon="edit" title="Edit" size="lg" /> Edit</Link>
-                  </td>
-                </tr>
+                {
+                  imageList.map((item, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>
+                          <img className="img-instagram"
+                            src={photoServerUrl + item.ImageUrl} alt="Instagram" />
+                        </td>
+                        <td>{item.RefUrl}</td>
+                        <td>{item.Status === '1' ? 'Yes' : 'No'}</td>
+                        <td>
+                          <Link to="/customer/insta-image" className="control-link">
+                            <FontAwesomeIcon icon="edit" title="Edit" size="lg" /> Edit</Link>
+                        </td>
+                      </tr>
+                      )
+                    })
+                  }
               </tbody>
             </Table>
           </Colxx>
@@ -82,3 +82,20 @@ export default class extends Component {
     );
   }
 }
+
+const mapStateToProps = ({ customerData, settings }) => {
+
+  const { imageList } = customerData;
+  const { locale } = settings;
+
+  return {
+    imageList, locale
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  {
+    getInstaImageList: imageList
+  }
+)(InstaImages);

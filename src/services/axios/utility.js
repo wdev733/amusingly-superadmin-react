@@ -1,14 +1,24 @@
+
 export function clearToken() {
-  localStorage.removeItem("accessToken")
+  localStorage.removeItem("adminID");
+  localStorage.removeItem("userName");
+  localStorage.removeItem("firstName");
+  localStorage.removeItem("lastName");
+  localStorage.removeItem("accessToken");
 }
 
 export function getToken() {
   try {
-    const accessToken = localStorage.getItem("accessToken")
+    const adminID = localStorage.getItem("adminID");
+    const userName = localStorage.getItem("userName");
+    const firstName = localStorage.getItem("firstName");
+    const lastName = localStorage.getItem("lastName");
+    const accessToken = localStorage.getItem("accessToken");
 
-    return { accessToken }
+    return { adminID, userName, firstName, lastName, accessToken };
+
   } catch (err) {
-    clearToken()
-    return null
+    clearToken();
+    return null;
   }
 }

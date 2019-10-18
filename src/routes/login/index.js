@@ -8,7 +8,7 @@ import { Colxx } from "Components/CustomBootstrap";
 import { connect } from "react-redux";
 import { loginUser } from "Redux/actions";
 
-import styles from './index.module.scss';
+import './index.module.scss';
 
 class LoginLayout extends Component {
   constructor(props) {

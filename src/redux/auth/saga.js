@@ -19,7 +19,7 @@ const loginWithUsernamePasswordAsync = async (username, password) =>
         .catch(error => error);
 
 function* loginWithUsernamePassword({ payload }) {
-    console.log(payload)
+    
     const { username, password } = payload.user;
     const { history } = payload;
     
@@ -99,8 +99,6 @@ function* logout({payload}) {
     } catch (error) {
     }
 }
-
-
 
 export function* watchRegisterUser() {
     yield takeEvery(REGISTER_USER, registerWithEmailPassword);

@@ -19,6 +19,9 @@ export const firebaseConfig = {
     messagingSenderId: "216495999563"
 };
 
-export const apiUrl ="http://localhost:9000/api/"
+export const photoServerUrl = "https://www.amusingly.com/"
+export const serverUrl = "http://localhost:3061/"
+// export const serverUrl = "http://18.220.107.112:3061/"
 
-export const searchPath = "/app/gogo/start"
+
+export const searchPath = "/customer/list"
