@@ -9,9 +9,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Link } from "react-router-dom";
 
-import styles from './index.module.scss'
+import './index.module.scss';
 
-export default class extends Component {
+class list extends Component {
   render() {
     return (
       <Fragment>
@@ -140,3 +140,5 @@ export default class extends Component {
     );
   }
 }
+
+export default list

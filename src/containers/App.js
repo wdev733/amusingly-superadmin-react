@@ -29,7 +29,7 @@ const InitialPath = ({ component: Component, ...rest, authUser }) =>
 	<Route
 		{...rest}
 		render={props =>
-			authUser 
+			(authUser && authUser.adminID > 0 & authUser.accessToken !== '')
 				? <Component {...props} />
 				: <Redirect
 					to={{
@@ -47,7 +47,7 @@ class App extends Component {
 		if (location.pathname === '/'  || location.pathname==='/app'|| location.pathname==='/app/') {
 			return (<Redirect to={defaultStartPath} />);
 		}
-
+		
 		return (
 				<Fragment>
 					<NotificationContainer />
@@ -66,7 +66,7 @@ class App extends Component {
 							<Route path={`/register`} component={register} />
 							<Route path={`/forgot-password`} component={forgotPassword} />
 							<Route path={`/error`} component={error} />
-							<Redirect to="/error" />
+							<Redirect tDro="/error" />
 						</Switch>
 						</Fragment>
 					</IntlProvider>

@@ -167,7 +167,7 @@ class Sidebar extends Component {
         });
       }else if (this.state.selectedParentMenu == "") {
         this.setState({
-          selectedParentMenu: "gogo"
+          selectedParentMenu: "customer"
         });
       }
 
@@ -244,7 +244,7 @@ class Sidebar extends Component {
       viewingParentMenu:menu
     })
   }
-
+  
   render() {
     return (
       <div className="sidebar">

@@ -1,6 +1,7 @@
 
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import { auth } from '../../firebase';
+import { loginAPI } from '../../services/axios/api';
 import {
     LOGIN_USER,
     REGISTER_USER,
@@ -12,26 +13,47 @@ import {
     registerUserSuccess
 } from './actions';
 
-const loginWithEmailPasswordAsync = async (email, password) =>
-    await auth.signInWithEmailAndPassword(email, password)
+const loginWithUsernamePasswordAsync = async (username, password) =>
+    await loginAPI(username, password)
         .then(authUser => authUser)
         .catch(error => error);
 
-
-
-function* loginWithEmailPassword({ payload }) {
-    const { email, password } = payload.user;
+function* loginWithUsernamePassword({ payload }) {
+    console.log(payload)
+    const { username, password } = payload.user;
     const { history } = payload;
+    
     try {
-        const loginUser = yield call(loginWithEmailPasswordAsync, email, password);
-        if (!loginUser.message) {
-            localStorage.setItem('user_id', loginUser.user.uid);
-            yield put(loginUserSuccess(loginUser));
-            history.push('/');
-        } else {
-            // catch throw
-            console.log('login failed :', loginUser.message)
+        const loginUser = yield call(loginWithUsernamePasswordAsync, username, password);
+        
+        if (loginUser.data) {
+            let success = loginUser.data.success;
+            if (success) {
+                
+                // Save admin info to localStorage
+                localStorage.setItem("adminID", loginUser.data.account.AdminID);
+                localStorage.setItem("userName", loginUser.data.account.UserName);
+                localStorage.setItem("firstName", loginUser.data.account.FirstName);
+                localStorage.setItem("lastName", loginUser.data.account.LastName);
+                localStorage.setItem('accessToken', loginUser.data.token);
+
+                let authData = {
+                    adminID: loginUser.data.account.AdminID,
+                    userName: loginUser.data.account.UserName,
+                    firstName: loginUser.data.account.FirstName,
+                    lastName: loginUser.data.account.LastName,
+                    accessToken: loginUser.data.token
+                };
+
+                yield put(loginUserSuccess(authData));
+                history.push('/');
+
+                return;
+            }
         }
+        
+        console.log('login failed')
+
     } catch (error) {
         // catch throw
         console.log('login error : ', error)
@@ -85,7 +107,7 @@ export function* watchRegisterUser() {
 }
 
 export function* watchLoginUser() {
-    yield takeEvery(LOGIN_USER, loginWithEmailPassword);
+    yield takeEvery(LOGIN_USER, loginWithUsernamePassword);
 }
 
 export function* watchLogoutUser() {

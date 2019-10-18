@@ -14,12 +14,20 @@ class LoginLayout extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "demo@gogo.com",
-      password: "gogo123"
+      username: "admin",
+      password: "AmNcus100c!"
     };
   }
+
+  inputChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
   onUserLogin() {
-    if (this.state.email !== "" && this.state.password !== "") {
+    if (this.state.username !== "" && this.state.password !== "") {
+      console.log(this.state);
       this.props.loginUser(this.state, this.props.history);
     }
   }
@@ -60,14 +68,16 @@ class LoginLayout extends Component {
                     </CardTitle>
                     <Form>
                       <Label className="form-group has-float-label mb-4">
-                        <Input type="email" defaultValue={this.state.email} />
-                        <IntlMessages id="user.email" />
+                        <Input type="username" value={this.state.username} 
+                              name="username" onChange={e => this.inputChange(e)} />
+                        <IntlMessages id="user.username" />
                       </Label>
                       <Label className="form-group has-float-label mb-4">
-                        <Input type="password" />
+                        <Input type="password" value={this.state.password}
+                              name="password" onChange={e => this.inputChange(e)} />
                         <IntlMessages
                           id="user.password"
-                          defaultValue={this.state.password}
+                          value={this.state.password}
                         />
                       </Label>
                       <div className="d-flex justify-content-between align-items-center">
