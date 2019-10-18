@@ -3,7 +3,8 @@ import { getToken } from "./utility"
 // import dotenv from "dotenv"
 
 // const API_ROOT = process.env.REACT_APP_BACKEND_BASE_URL
-const API_ROOT = "http://localhost:3061";
+// const API_ROOT = "http://localhost:3061";
+const API_ROOT = "http://18.220.107.112:3061/";
 
 const client = axios.create({
   baseURL: API_ROOT
