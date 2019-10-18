@@ -2,6 +2,7 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import { auth } from '../../firebase';
 import { loginAPI } from '../../services/axios/api';
+import { client } from '../../services/axios/apiConfig';
 import {
     LOGIN_USER,
     REGISTER_USER,
@@ -44,6 +45,10 @@ function* loginWithUsernamePassword({ payload }) {
                     lastName: loginUser.data.account.LastName,
                     accessToken: loginUser.data.token
                 };
+
+                client.defaults.headers.common = {
+                    Authorization: `Bearer ${loginUser.data.token}`
+                }
 
                 yield put(loginUserSuccess(authData));
                 history.push('/');
