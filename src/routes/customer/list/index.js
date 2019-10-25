@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { connect } from 'react-redux';
 
 import IntlMessages from "Util/IntlMessages";
-import { Row, Table } from "reactstrap";
+import { Row, Table, Button } from "reactstrap";
 
 import { Colxx } from "Components/CustomBootstrap";
 import BreadcrumbContainer from "Components/BreadcrumbContainer";
@@ -15,16 +15,12 @@ import { photoServerUrl } from "Constants/defaultValues";
 
 import { 
   customerList,
-  suspendCustomer
+  suspendCustomer,
 } from "Redux/actions";
 
 import './index.module.scss';
 
 class list extends Component {
-
-  // constructor(props) {
-  //   super(props)
-  // }
 
   handleSuspendCustomer = (e, customer) => {
     e.preventDefault();
@@ -36,6 +32,10 @@ class list extends Component {
     this.props.getCustomerList();
   }
 
+  handleNewCustomer = (e) => {
+    e.preventDefault();
+  }
+
   render() {
 
     const { customerList } = this.props;
@@ -43,11 +43,14 @@ class list extends Component {
     return (
       <Fragment>
         <Row>
-          <Colxx xxs="12">
+          <Colxx xxs="8">
             <BreadcrumbContainer
               heading={<IntlMessages id="menu.customer" />}
               match={this.props.match}
             />
+          </Colxx>
+          <Colxx xxs="4">
+            <Link to="/customer/add" className="btn btn-info btn-sm pull-right">Add Customer</Link>
           </Colxx>
         </Row>
         <Row>

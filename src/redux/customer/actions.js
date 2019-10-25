@@ -6,7 +6,9 @@ import {
   IMAGES_LIST,
   IMAGES_LIST_SUCCESS,
   CUSTOMER_ONE,
-  CUSTOMER_ONE_SUCCESS
+  CUSTOMER_ONE_SUCCESS,
+  ADD_CUSTOMER,
+  ADD_CUSTOMER_SUCCESS
 } from 'Constants/actionTypes';
 
 export const customerList = () => ({
@@ -48,3 +50,12 @@ export const customerOneSuccess = (customer) => ({
   type: CUSTOMER_ONE_SUCCESS,
   payload: { customer }
 });
+
+export const addCustomer = (customer, history) => ({
+  type: ADD_CUSTOMER,
+  payload: { customer, history }
+})
+
+export const addCustomerSuccess = () => ({
+  type: ADD_CUSTOMER_SUCCESS
+})
