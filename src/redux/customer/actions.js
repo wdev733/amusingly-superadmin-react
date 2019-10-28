@@ -8,7 +8,9 @@ import {
   CUSTOMER_ONE,
   CUSTOMER_ONE_SUCCESS,
   ADD_CUSTOMER,
-  ADD_CUSTOMER_SUCCESS
+  ADD_CUSTOMER_SUCCESS,
+  EDIT_CUSTOMER,
+  EDIT_CUSTOMER_SUCCESS
 } from 'Constants/actionTypes';
 
 export const customerList = () => ({
@@ -58,4 +60,13 @@ export const addCustomer = (customer, history) => ({
 
 export const addCustomerSuccess = () => ({
   type: ADD_CUSTOMER_SUCCESS
+})
+
+export const editCustomer = (customer, history) => ({
+  type: EDIT_CUSTOMER,
+  payload: { customer, history }
+})
+
+export const editCustomerSuccess = () => ({
+  type: EDIT_CUSTOMER_SUCCESS
 })

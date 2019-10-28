@@ -8,9 +8,10 @@ import {
   CUSTOMER_ONE,
   CUSTOMER_ONE_SUCCESS,
   ADD_CUSTOMER,
-  ADD_CUSTOMER_SUCCESS
+  ADD_CUSTOMER_SUCCESS,
+  EDIT_CUSTOMER,
+  EDIT_CUSTOMER_SUCCESS
 } from "Constants/actionTypes";
-import { ADD_CUSTOMER } from "../../constants/actionTypes";
 
 const INIT_STATE = {
   customerList: [],
@@ -41,6 +42,10 @@ export default (state = INIT_STATE, action) => {
     case ADD_CUSTOMER:
       return { ...state, loading: false }
     case ADD_CUSTOMER_SUCCESS: 
+      return { ...state, loading: true }
+    case EDIT_CUSTOMER:
+      return { ...state, loading: false }
+    case EDIT_CUSTOMER_SUCCESS:
       return { ...state, loading: true }
     default:
       return { ...state };

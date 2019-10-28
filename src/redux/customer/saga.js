@@ -5,14 +5,17 @@ import {
 	instaImageListByCustomerAPI,
 	suspendCustomerAPI,
 	customerOneAPI,
-	addCustomerAPI
+	addCustomerAPI,
+	editCustomerAPI
+
 } from '../../services/axios/api';
 import {
 	CUSTOMER_LIST,
 	IMAGES_LIST,
 	SUSPEND_CUSTOMER,
 	CUSTOMER_ONE,
-	ADD_CUSTOMER
+	ADD_CUSTOMER,
+	EDIT_CUSTOMER
 } from 'Constants/actionTypes';
 
 import {
@@ -20,8 +23,10 @@ import {
 	customerListSuccess,
 	imageListSuccess,
 	customerOneSuccess,
-	addCustomerSuccess
-} from './actions';
+	addCustomerSuccess,
+	showNotification,
+	editCustomerSuccess,
+} from '../actions';
 
 const getCustomerListAsync = async () =>
 	await customerListAPI()
@@ -128,13 +133,51 @@ function* addCustomer({ payload }) {
 	try {
 		
 		const { customer, history } = payload;
-		console.log(payload);
-		const result = yield call(addCustomerAsync, customer);
 		
+		const result = yield call(addCustomerAsync, customer);
+		// console.log("*******");
+		// console.log(result);
 		if (result.data.success) {
 
-			yield put(addCustomerSuccess());
-			history.push('/customer/list');
+			if (result.data.data.result) {
+				yield put(addCustomerSuccess());
+				history.push('/customer/list');
+			} else {
+				yield put(showNotification('error', result.data.data.message));
+			}
+			
+			return;
+		}
+
+		console.log('Error!!!')
+
+	} catch (error) {
+		// catch throw
+		console.log('customer list error : ', error)
+	}
+}
+
+const editCustomerAsync = async (customer) =>
+	await editCustomerAPI(customer)
+		.then(result => result)
+		.catch(error => error);
+
+function* editCustomer({ payload }) {
+	try {
+
+		const { customer, history } = payload;
+
+		const result = yield call(editCustomerAsync, customer);
+
+		if (result.data.success) {
+
+			if (result.data.data.result) {
+				yield put(editCustomerSuccess());
+				history.push('/customer/list');
+			} else {
+				yield put(showNotification('error', result.data.data.message));
+			}
+
 			return;
 		}
 
@@ -166,12 +209,17 @@ export function* watchAddCustomer() {
 	yield takeEvery(ADD_CUSTOMER, addCustomer);
 }
 
+export function* watchEditCustomer() {
+	yield takeEvery(EDIT_CUSTOMER, editCustomer);
+}
+
 export default function* rootSaga() {
 	yield all([
 		fork(watchCustomerList),
 		fork(watchImageList),
 		fork(watchSuspendCustomer),
 		fork(watchCustomerOne),
-		fork(watchAddCustomer)
+		fork(watchAddCustomer),
+		fork(watchEditCustomer)
 	]);
 }

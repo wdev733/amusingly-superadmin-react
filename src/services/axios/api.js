@@ -29,9 +29,12 @@ const suspendCustomerAPI = (customerId, status) => {
 
 const addCustomerAPI = (customer) => {
   
-  return client.post("/api/customer/add", {
-    ...customer
-  })
+  return client.post("/api/customer/add", customer)
+}
+
+const editCustomerAPI = (customer) => {
+
+  return client.post("/api/customer/edit", customer)
 }
 
 export { 
@@ -40,5 +43,6 @@ export {
   customerOneAPI,
   instaImageListByCustomerAPI ,
   suspendCustomerAPI,
-  addCustomerAPI
+  addCustomerAPI,
+  editCustomerAPI
 }

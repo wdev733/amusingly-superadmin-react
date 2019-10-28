@@ -12,11 +12,14 @@ import './index.module.scss'
 import { connect } from 'react-redux';
 import { photoServerUrl, defaultCustomer } from "Constants/defaultValues";
 
-import {  NotificationManager} from "Components/ReactNotifications";
+import {  NotificationManager } from "Components/ReactNotifications";
+
+// import FormData from 'form-data';
 
 import {
   customerOne,
-  addCustomer
+  addCustomer,
+  closeNotification
 } from "Redux/actions";
 
 class AddCustomer extends Component {
@@ -42,11 +45,12 @@ class AddCustomer extends Component {
   }
 
   onAddCustomer = (e) => {
+
     const { 
       UserName, Password, Name, Email, Phone, BillingAddress1, BillingAddress2,
       City, Country, State, InstaProfileName, SalesRep, UrlKey, InstaUserId, AccessToken,
       ProfileLogo, LastLogin, LastSync, Status, autosyscro } = this.state.customer
-
+    
     if (UserName.trim() === "") {
       NotificationManager.error(
         "Username is required", "Error", 3000,
@@ -88,11 +92,6 @@ class AddCustomer extends Component {
         "City is required", "Error", 3000,
         null, null, "error filled"
       );
-    } else if (Country.trim() === "") {
-      NotificationManager.error(
-        "Country is required", "Error", 3000,
-        null, null, "error filled"
-      );
     } else if (State.trim() === "") {
       NotificationManager.error(
         "State is required", "Error", 3000,
@@ -109,10 +108,35 @@ class AddCustomer extends Component {
         null, null, "error filled"
       );
     } else {
+
+      // var data = new FormData();
+      // data.append('ddd', 'fff');
+      // data.set('file', this.uploadInput.files[0]);
+      
+      // for (let key of Object.keys(this.state.customer)) {
+      //   let value = this.state.customer[key];
+      //   data.set(key, value);
+      // }
+
+      // console.log(data);
+      // return;
       this.props.addCustomer(this.state.customer, this.props.history);
     }
     
   }
+
+  componentWillReceiveProps(props) {
+    const { notificationShow, notificationType, notificationMessage } = props;
+    if (notificationShow === true) {
+      NotificationManager.error(
+        notificationMessage, "Error", 3000,
+        null, null, "error filled"
+      );
+
+      this.props.closeNotification();
+    }
+  }
+
   render() {
 
     const { customer } = this.state;
@@ -202,27 +226,27 @@ class AddCustomer extends Component {
                   <option value="Montana">Montana</option>
                   <option value="Nebraska">Nebraska</option>
                   <option value="Nevada">Nevada</option>
-                  <option value="New" hampshire="">New Hampshire</option>
-                  <option value="New" jersey="">New Jersey</option>
-                  <option value="New" mexico="">New Mexico</option>
-                  <option value="New" york="">New York</option>
-                  <option value="North" carolina="">North Carolina</option>
-                  <option value="North" dakota="">North Dakota</option>
+                  <option value="New Hampshire" hampshire="">New Hampshire</option>
+                  <option value="New Jersey" jersey="">New Jersey</option>
+                  <option value="NeNew Mexicow" mexico="">New Mexico</option>
+                  <option value="New York" york="">New York</option>
+                  <option value="North Carolina" carolina="">North Carolina</option>
+                  <option value="North Dakota" dakota="">North Dakota</option>
                   <option value="Ohio">Ohio</option>
                   <option value="Oklahoma">Oklahoma</option>
                   <option value="Oregon">Oregon</option>
                   <option value="Pennsylvania">Pennsylvania</option>
-                  <option value="Rhode" island="">Rhode Island</option>
-                  <option value="South" carolina="">South Carolina</option>
-                  <option value="South" dakota="">South Dakota</option>
+                  <option value="Rhode Island" island="">Rhode Island</option>
+                  <option value="South Carolina" carolina="">South Carolina</option>
+                  <option value="South Dakota" dakota="">South Dakota</option>
                   <option value="Tennessee">Tennessee</option>
                   <option value="Texas">Texas</option>
                   <option value="Utah">Utah</option>
                   <option value="Vermont">Vermont</option>
                   <option value="Virginia">Virginia</option>
                   <option value="Washington">Washington</option>
-                  <option value="West" virginia="">West Virginia</option>
-                  <option value="Wisconsin" and="" wyoming="">Wisconsin and Wyoming</option>
+                  <option value="West Virginia" virginia="">West Virginia</option>
+                  <option value="Wisconsin and Wyoming" and="" wyoming="">Wisconsin and Wyoming</option>
                 </Input>
               </FormGroup>
               <FormGroup>
@@ -238,7 +262,7 @@ class AddCustomer extends Component {
               </FormGroup>
               <FormGroup>
                 <Label for="profilePhoto">Profile Logo</Label>
-                <Input type="file" name="profilePhoto" id="profilePhoto" />
+                <input ref={(ref) => { this.uploadInput = ref; }} type="file" />
               </FormGroup>
               <FormGroup>
                 <Label for="status">Status</Label>
@@ -261,13 +285,18 @@ class AddCustomer extends Component {
   }
 }
 
-const mapStateToProps = ({ customerData, settings }) => {
+const mapStateToProps = ({ customerData, settings, notification }) => {
 
   const { customer } = customerData;
   const { locale } = settings;
+  const { show, type, message} = notification;
 
   return {
-    customer, locale
+    customer, 
+    locale,
+    notificationShow: show,
+    notificationType: type,
+    notificationMessage: message
   };
 };
 
@@ -275,6 +304,7 @@ export default connect(
   mapStateToProps,
   {
     getCustomerOne: customerOne,
-    addCustomer
+    addCustomer,
+    closeNotification
   }
 )(AddCustomer);
