@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import IntlMessages from "Util/IntlMessages";
-import { Row, Button, Form, FormGroup, Label, Input } from "reactstrap";
+import { Alert, Row, Button, Form, FormGroup, Label, Input } from "reactstrap";
 
 import { Colxx } from "Components/CustomBootstrap";
 import BreadcrumbContainer from "Components/BreadcrumbContainer";
@@ -11,6 +11,8 @@ import './index.module.scss'
 
 import { connect } from 'react-redux';
 import { photoServerUrl, defaultCustomer } from "Constants/defaultValues";
+
+import {  NotificationManager} from "Components/ReactNotifications";
 
 import {
   customerOne,
@@ -40,7 +42,76 @@ class AddCustomer extends Component {
   }
 
   onAddCustomer = (e) => {
-    this.props.addCustomer(this.state.customer, this.props.history);
+    const { 
+      UserName, Password, Name, Email, Phone, BillingAddress1, BillingAddress2,
+      City, Country, State, InstaProfileName, SalesRep, UrlKey, InstaUserId, AccessToken,
+      ProfileLogo, LastLogin, LastSync, Status, autosyscro } = this.state.customer
+
+    if (UserName.trim() === "") {
+      NotificationManager.error(
+        "Username is required", "Error", 3000,
+        null, null, "error filled"
+      );
+      
+    } else if (Password.trim() === "") {
+      NotificationManager.error(
+        "Password is required", "Error", 3000,
+        null, null, "error filled"
+      );
+    } else if (Name.trim() === "") {
+      NotificationManager.error(
+        "Name is required", "Error", 3000,
+        null, null, "error filled"
+      );
+    } else if (Email.trim() === "") {
+      NotificationManager.error(
+        "Email is required", "Error", 3000,
+        null, null, "error filled"
+      );
+    } else if (Phone.trim() === "") {
+      NotificationManager.error(
+        "Phone is required", "Error", 3000,
+        null, null, "error filled"
+      );
+    } else if (BillingAddress1.trim() === "") {
+      NotificationManager.error(
+        "BillingAddress1 is required", "Error", 3000,
+        null, null, "error filled"
+      );
+    } else if (BillingAddress2.trim() === "") {
+      NotificationManager.error(
+        "BillingAddress2 is required", "Error", 3000,
+        null, null, "error filled"
+      );
+    } else if (City.trim() === "") {
+      NotificationManager.error(
+        "City is required", "Error", 3000,
+        null, null, "error filled"
+      );
+    } else if (Country.trim() === "") {
+      NotificationManager.error(
+        "Country is required", "Error", 3000,
+        null, null, "error filled"
+      );
+    } else if (State.trim() === "") {
+      NotificationManager.error(
+        "State is required", "Error", 3000,
+        null, null, "error filled"
+      );
+    } else if (InstaProfileName.trim() === "") {
+      NotificationManager.error(
+        "InstaProfileName is required", "Error", 3000,
+        null, null, "error filled"
+      );
+    } else if (UrlKey.trim() === "") {
+      NotificationManager.error(
+        "UrlKey is required", "Error", 3000,
+        null, null, "error filled"
+      );
+    } else {
+      this.props.addCustomer(this.state.customer, this.props.history);
+    }
+    
   }
   render() {
 

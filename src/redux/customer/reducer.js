@@ -6,8 +6,11 @@ import {
   IMAGES_LIST,
   IMAGES_LIST_SUCCESS,
   CUSTOMER_ONE,
-  CUSTOMER_ONE_SUCCESS
+  CUSTOMER_ONE_SUCCESS,
+  ADD_CUSTOMER,
+  ADD_CUSTOMER_SUCCESS
 } from "Constants/actionTypes";
+import { ADD_CUSTOMER } from "../../constants/actionTypes";
 
 const INIT_STATE = {
   customerList: [],
@@ -35,6 +38,10 @@ export default (state = INIT_STATE, action) => {
       return { ...state, loading: false, customerId: action.payload.customerId };
     case CUSTOMER_ONE_SUCCESS:
       return { ...state, loading: true, customer: action.payload.customer };
+    case ADD_CUSTOMER:
+      return { ...state, loading: false }
+    case ADD_CUSTOMER_SUCCESS: 
+      return { ...state, loading: true }
     default:
       return { ...state };
   }

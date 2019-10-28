@@ -133,7 +133,7 @@ function* addCustomer({ payload }) {
 		
 		if (result.data.success) {
 
-			// yield put(customerListSuccess(result.data.data));
+			yield put(addCustomerSuccess());
 			history.push('/customer/list');
 			return;
 		}
