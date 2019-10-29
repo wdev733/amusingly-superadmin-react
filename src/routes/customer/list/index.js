@@ -16,6 +16,7 @@ import { photoServerUrl } from "Constants/defaultValues";
 import { 
   customerList,
   suspendCustomer,
+  deleteCustomer
 } from "Redux/actions";
 
 import './index.module.scss';
@@ -26,6 +27,12 @@ class list extends Component {
     e.preventDefault();
 
     this.props.suspendCustomer(customer);
+  };
+
+  handleDeleteCustomer = (e, customer) => {
+    e.preventDefault();
+
+    this.props.deleteCustomer(customer);
   };
 
   componentDidMount() {
@@ -92,7 +99,7 @@ class list extends Component {
                             <FontAwesomeIcon icon="unlink" title="Unsync" size="lg" /></Link>
                           <Link to={"/customer/images/" + item.CustomerID} className="control-link">
                             <FontAwesomeIcon icon="list" title="List Images" size="lg" /></Link>
-                          <Link to="/customer" className="control-link">
+                          <Link to="/customer" className="control-link" onClick={(e) => this.handleDeleteCustomer(e, item)}>
                             <FontAwesomeIcon icon="times" title="Delete" size="lg" /></Link>
                         </td>
                       </tr>
@@ -125,6 +132,7 @@ export default connect(
   mapStateToProps,
   {
     getCustomerList: customerList,
-    suspendCustomer: suspendCustomer
+    suspendCustomer: suspendCustomer,
+    deleteCustomer
   }
 )(list);

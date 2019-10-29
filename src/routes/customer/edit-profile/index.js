@@ -10,13 +10,27 @@ import { Link } from "react-router-dom";
 import './index.module.scss'
 
 import { connect } from 'react-redux';
-import { photoServerUrl } from "Constants/defaultValues";
+import { photoServerUrl, defaultCustomer } from "Constants/defaultValues";
+
+import { NotificationManager } from "Components/ReactNotifications";
 
 import {
-  customerOne
+  customerOne,
+  editCustomer,
+  closeNotification
 } from "Redux/actions";
 
 class EditCustomer extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      customer: {
+        ...defaultCustomer
+      }
+    }
+  }
 
   componentDidMount() {
     const { customerId } = this.props.match.params;
@@ -24,10 +38,112 @@ class EditCustomer extends Component {
     this.props.getCustomerOne(customerId);
   }
 
+  componentWillReceiveProps(props) {
+
+    const { notificationShow, notificationType, notificationMessage } = props;
+    if (notificationShow === true) {
+      NotificationManager.error(
+        notificationMessage, "Error", 3000,
+        null, null, "error filled"
+      );
+
+      this.props.closeNotification();
+    } 
+
+    if (this.state.customer.CustomerID === 0) {
+      if (props.customer) {
+        this.setState({
+          customer: {
+            ...props.customer
+          }
+        });
+      }
+    }
+    
+  }
+
+  inputChange = (e) => {
+    this.setState({
+      customer: {
+        ...this.state.customer,
+        [e.target.name]: e.target.value
+      }
+    })
+  }
+
+  onEditCustomer = (e) => {
+
+    const {
+      UserName, Password, Name, Email, Phone, BillingAddress1, BillingAddress2,
+      City, Country, State, InstaProfileName, SalesRep, UrlKey, InstaUserId, AccessToken,
+      ProfileLogo, LastLogin, LastSync, Status, autosyscro } = this.state.customer
+
+    if (UserName.trim() === "") {
+      NotificationManager.error(
+        "Username is required", "Error", 3000,
+        null, null, "error filled"
+      );
+
+    } else if (Password.trim() === "") {
+      NotificationManager.error(
+        "Password is required", "Error", 3000,
+        null, null, "error filled"
+      );
+    } else if (Name.trim() === "") {
+      NotificationManager.error(
+        "Name is required", "Error", 3000,
+        null, null, "error filled"
+      );
+    } else if (Email.trim() === "") {
+      NotificationManager.error(
+        "Email is required", "Error", 3000,
+        null, null, "error filled"
+      );
+    } else if (Phone.trim() === "") {
+      NotificationManager.error(
+        "Phone is required", "Error", 3000,
+        null, null, "error filled"
+      );
+    } else if (BillingAddress1.trim() === "") {
+      NotificationManager.error(
+        "BillingAddress1 is required", "Error", 3000,
+        null, null, "error filled"
+      );
+    } else if (BillingAddress2.trim() === "") {
+      NotificationManager.error(
+        "BillingAddress2 is required", "Error", 3000,
+        null, null, "error filled"
+      );
+    } else if (City.trim() === "") {
+      NotificationManager.error(
+        "City is required", "Error", 3000,
+        null, null, "error filled"
+      );
+    } else if (State.trim() === "") {
+      NotificationManager.error(
+        "State is required", "Error", 3000,
+        null, null, "error filled"
+      );
+    } else if (InstaProfileName.trim() === "") {
+      NotificationManager.error(
+        "InstaProfileName is required", "Error", 3000,
+        null, null, "error filled"
+      );
+    } else if (UrlKey.trim() === "") {
+      NotificationManager.error(
+        "UrlKey is required", "Error", 3000,
+        null, null, "error filled"
+      );
+    } else {
+      this.props.editCustomer(this.state.customer, this.props.history);
+    }
+
+  }
+
   render() {
     
-    const { customer } = this.props;
-    console.log(customer.CustomerID);
+    const { customer } = this.state;
+    
     return (
       <Fragment>
         <Row>
@@ -173,19 +289,25 @@ class EditCustomer extends Component {
   }
 }
 
-const mapStateToProps = ({ customerData, settings }) => {
+const mapStateToProps = ({ customerData, settings, notification }) => {
 
   const { customer } = customerData;
   const { locale } = settings;
+  const { show, type, message } = notification;
 
   return {
-    customer, locale
+    customer, locale,
+    notificationShow: show,
+    notificationType: type,
+    notificationMessage: message
   };
 };
 
 export default connect(
   mapStateToProps,
   {
-    getCustomerOne: customerOne
+    getCustomerOne: customerOne,
+    editCustomer,
+    closeNotification
   }
 )(EditCustomer);

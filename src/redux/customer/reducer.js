@@ -3,6 +3,8 @@ import {
   CUSTOMER_LIST_SUCCESS,
   SUSPEND_CUSTOMER,
   SUSPEND_CUSTOMER_SUCCESS,
+  DELETE_CUSTOMER,
+  DELETE_CUSTOMER_SUCCESS,
   IMAGES_LIST,
   IMAGES_LIST_SUCCESS,
   CUSTOMER_ONE,
@@ -34,6 +36,10 @@ export default (state = INIT_STATE, action) => {
     case SUSPEND_CUSTOMER:
       return { ...state, loading: false };
     case SUSPEND_CUSTOMER_SUCCESS:
+      return { ...state, loading: true };
+    case DELETE_CUSTOMER:
+      return { ...state, loading: false };
+    case DELETE_CUSTOMER_SUCCESS:
       return { ...state, loading: true };
     case CUSTOMER_ONE:
       return { ...state, loading: false, customerId: action.payload.customerId };

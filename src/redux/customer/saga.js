@@ -6,13 +6,15 @@ import {
 	suspendCustomerAPI,
 	customerOneAPI,
 	addCustomerAPI,
-	editCustomerAPI
-
+	editCustomerAPI,
+	deleteCustomerAPI
 } from '../../services/axios/api';
+
 import {
 	CUSTOMER_LIST,
 	IMAGES_LIST,
 	SUSPEND_CUSTOMER,
+	DELETE_CUSTOMER,
 	CUSTOMER_ONE,
 	ADD_CUSTOMER,
 	EDIT_CUSTOMER
@@ -189,6 +191,32 @@ function* editCustomer({ payload }) {
 	}
 }
 
+const deleteCustomerAsync = async (customerId) =>
+	await deleteCustomerAPI(customerId)
+		.then(result => result)
+		.catch(error => error);
+
+function* deleteCustomer({ payload }) {
+
+	const customerId = payload.customer.CustomerID;
+
+	try {
+		const result = yield call(deleteCustomerAsync, customerId);
+
+		if (result.data.success) {
+
+			yield put(customerList());
+			return;
+		}
+
+		console.log('Error!!!')
+
+	} catch (error) {
+		// catch throw
+		console.log('customer list error : ', error)
+	}
+}
+
 export function* watchCustomerList() {
 	yield takeEvery(CUSTOMER_LIST, getCustomerList);
 }
@@ -213,6 +241,10 @@ export function* watchEditCustomer() {
 	yield takeEvery(EDIT_CUSTOMER, editCustomer);
 }
 
+export function* watchDeleteCustomer() {
+	yield takeEvery(DELETE_CUSTOMER, deleteCustomer);
+}
+
 export default function* rootSaga() {
 	yield all([
 		fork(watchCustomerList),
@@ -220,6 +252,7 @@ export default function* rootSaga() {
 		fork(watchSuspendCustomer),
 		fork(watchCustomerOne),
 		fork(watchAddCustomer),
-		fork(watchEditCustomer)
+		fork(watchEditCustomer),
+		fork(watchDeleteCustomer)
 	]);
 }

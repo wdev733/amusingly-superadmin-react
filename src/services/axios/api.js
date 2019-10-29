@@ -27,6 +27,13 @@ const suspendCustomerAPI = (customerId, status) => {
   })
 }
 
+const deleteCustomerAPI = (customerId) => {
+
+  return client.post("/api/customer/delete", {
+    customer: customerId
+  })
+}
+
 const addCustomerAPI = (customer) => {
   
   return client.post("/api/customer/add", customer)
@@ -44,5 +51,6 @@ export {
   instaImageListByCustomerAPI ,
   suspendCustomerAPI,
   addCustomerAPI,
-  editCustomerAPI
+  editCustomerAPI,
+  deleteCustomerAPI
 }

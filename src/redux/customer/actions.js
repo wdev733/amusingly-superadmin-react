@@ -10,7 +10,9 @@ import {
   ADD_CUSTOMER,
   ADD_CUSTOMER_SUCCESS,
   EDIT_CUSTOMER,
-  EDIT_CUSTOMER_SUCCESS
+  EDIT_CUSTOMER_SUCCESS,
+  DELETE_CUSTOMER,
+  DELETE_CUSTOMER_SUCCESS
 } from 'Constants/actionTypes';
 
 export const customerList = () => ({
@@ -30,6 +32,16 @@ export const suspendCustomer = (customer) => ({
 
 export const suspendCustomerSuccess = (customer) => ({
   type: SUSPEND_CUSTOMER_SUCCESS,
+  payload: { customer }
+});
+
+export const deleteCustomer = (customer) => ({
+  type: DELETE_CUSTOMER,
+  payload: { customer }
+});
+
+export const deleteCustomerSuccess = (customer) => ({
+  type: DELETE_CUSTOMER_SUCCESS,
   payload: { customer }
 });
 
